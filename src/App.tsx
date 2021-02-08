@@ -37,6 +37,8 @@ function App() {
     }
 
     function filteredTask( filter:FilterType ) {
+
+
         setFilter(filter)
     }
 
