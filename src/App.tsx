@@ -5,7 +5,7 @@ import {v1} from "uuid";
 import {AddItemForm} from "./AddItemForm";
 
 export type  FilterType = "all" | "active" | "completed"
-type TodoListType = {
+export type TodoListType = {
     id: string
     title: string
     filter: FilterType
@@ -44,6 +44,14 @@ function App() {
 
         if (todoListTitle) {
             todoListTitle.title = title
+            setTodoList([...todoLists])
+        }
+    }
+
+    function filteredTask(filter: FilterType, todoListId: string) {
+        let todoList = todoLists.find(tl => tl.id === todoListId)
+        if (todoList) {
+            todoList.filter = filter
             setTodoList([...todoLists])
         }
     }
@@ -92,13 +100,7 @@ function App() {
         }
     }
 
-    function filteredTask(filter: FilterType, todoListId: string) {
-        let todoList = todoLists.find(tl => tl.id === todoListId)
-        if (todoList) {
-            todoList.filter = filter
-            setTodoList([...todoLists])
-        }
-    }
+
 
     return (
         <div className="App">
