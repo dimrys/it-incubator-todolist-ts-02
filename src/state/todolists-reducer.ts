@@ -6,7 +6,8 @@ export enum TypeActionType {
     REMOVE_TODOLIST = 'REMOVE-TODOLIST',
     ADD_TODOLIST = 'ADD-TODOLIST',
     CHANGE_TODOLIST_TITLE = 'CHANGE-TODOLIST-TITLE',
-    CHANGE_TODOLIST_FILTER = 'CHANGE-TODOLIST-FILTER'
+    CHANGE_TODOLIST_FILTER = 'CHANGE-TODOLIST-FILTER',
+
 }
 
 export type ActionType = ReturnType<typeof RemoveTodoListAC>
@@ -20,8 +21,7 @@ export const todoListReducer = (state: Array<TodoListType>, action: ActionType) 
             return state.filter(tl => tl.id !== action.id)
         }
         case TypeActionType.ADD_TODOLIST: {
-            const newTodoListId = v1()
-            const newTodoList: TodoListType = {id: newTodoListId, title: action.title, filter: "all"}
+            const newTodoList: TodoListType = {id: action.idTd, title: action.title, filter: "all"}
             return [...state, newTodoList ]
         }
         case TypeActionType.CHANGE_TODOLIST_TITLE: {
@@ -47,7 +47,7 @@ export const RemoveTodoListAC = (id: string) => {
     return { type: TypeActionType.REMOVE_TODOLIST,id } as const
 }
 export const AddTodoListAC = (title: string) => {
-    return  { type:TypeActionType.ADD_TODOLIST, title } as const
+    return  { type:TypeActionType.ADD_TODOLIST, title, idTd: v1() } as const
 }
 export const ChangeTodoListTitleAC = ( id:string, title:string) => {
     return {type:TypeActionType.CHANGE_TODOLIST_TITLE, id, title} as const
