@@ -15,14 +15,16 @@ export type ActionType = ReturnType<typeof RemoveTodoListAC>
     | ReturnType<typeof ChangeTodoListTitleAC>
     | ReturnType<typeof ChangeTodoListFilterAC>
 
-export const todoListReducer = (state: Array<TodoListType>, action: ActionType) => {
+const initState: Array<TodoListType> = []
+
+export const todoListReducer = (state: Array<TodoListType> = initState, action: ActionType): Array<TodoListType> => {
     switch (action.type) {
         case TypeActionType.REMOVE_TODOLIST: {
             return state.filter(tl => tl.id !== action.id)
         }
         case TypeActionType.ADD_TODOLIST: {
             const newTodoList: TodoListType = {id: action.idTd, title: action.title, filter: "all"}
-            return [...state, newTodoList ]
+            return [newTodoList, ...state ]
         }
         case TypeActionType.CHANGE_TODOLIST_TITLE: {
             return state.map(tl => {
@@ -39,7 +41,7 @@ export const todoListReducer = (state: Array<TodoListType>, action: ActionType) 
             })
         }
         default:
-            throw new Error ("I don't understand this type")
+            return state
     }
 }
 
